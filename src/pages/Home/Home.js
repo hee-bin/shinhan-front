@@ -40,8 +40,7 @@ const Home = () => {
         <section className={styles.header}>
           <div className={styles.headerSubTitle}>지금 계좌 개설하면</div>
           <div className={styles.headerTitle}>
-            <span className={styles.primaryColor}>수수료 평생혜택</span>{" "}
-            제공하지 않음
+            <span className={styles.primaryColor}>수수료 평생혜택</span>제공하지 않음
           </div>
           {/* 카드 섹션 */}
           <div className={styles.cardContainer}>
