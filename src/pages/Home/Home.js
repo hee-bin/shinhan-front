@@ -54,7 +54,8 @@ const Home = () => {
             <div className={styles.cardTitle}>
               온라인 국내주식 수수료
               <br />
-              <span className={styles.primaryColor}>평생 혜택 </span>제공
+              <span className={styles.primaryColor}>평생 혜택 </span>제공하지
+              않음
             </div>
             {/* 설명 */}
             <ul className={styles.cardDesc}>
