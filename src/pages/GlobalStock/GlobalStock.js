@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styles from "./GlobalStock.module.css";
 import LinkListItem from "../../components/LinkListItem/LinkListItem";
 import EventLogo1 from "../../assets/images/event_logo_1.png";
+import EventLogo2 from "../../assets/images/event_logo_2.png";
+import EventLogo3 from "../../assets/images/event_logo_3.png";
 import EventInfo from "../../components/EventInfo/EventInfo";
 import AccordianListItem from "../../components/AccordianListItem/AccordianListItem";
 import BenefitCard from "../../components/BenefitCard/BenefitCard";
@@ -11,29 +13,30 @@ import { getStockGlobalEvents } from "../../apis/stockApis";
 
 const GlobalStock = () => {
   const navigate = useNavigate();
-  const [isOpenAccordian1, setIsOpenAccordian1] = useState(false);
-  const [isOpenAccordian2, setIsOpenAccordian2] = useState(false);
-  const [events, setEvents] = useState();
+  const [openAccordion1, setOpenAccordion1] = useState(false);
+  const [openAccordion2, setOpenAccordion2] = useState(false);
+  const [events, setEvents] = useState(null);
+
+  /** 이벤트 리스트 서버에서 불러와서 events 상태에 set */
+  const fetchEvents = async () => {
+    try {
+      const response = await getStockGlobalEvents(); // Use the imported function
+      setEvents(response); // Assuming the events data is returned correctly
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
 
   // 렌더링 후 호출되는 로직
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  /** 이벤트 리스트 서버에서 불러와서 events 상태에 set */
-  const fetchEvents = async () => {
-    const response = await getStockGlobalEvents();
-    setEvents(response);
-  };
-
-  /**  첫번째 아코디언 아이템 클릭 이벤트*/
   const onClickAccordion1 = () => {
-    setIsOpenAccordian1(!isOpenAccordian1);
+    setOpenAccordion1(!openAccordion1);
   };
-
-  /** 두번째 아코디언 아이템 클릭 이벤트  */
   const onClickAccordion2 = () => {
-    setIsOpenAccordian2(!isOpenAccordian2);
+    setOpenAccordion2(!openAccordion2);
   };
 
   return (
@@ -85,11 +88,11 @@ const GlobalStock = () => {
             <AccordianListItem
               title={"투자에 필요한 더~ 많은 혜택"}
               onClick={onClickAccordion1}
-              isOpen={isOpenAccordian1}
+              isOpen={openAccordion1}
             />
             <div
               className={`${styles.linkContentContainer} ${
-                isOpenAccordian1 ? styles.itemOpen : ""
+                openAccordion1 ? styles.itemOpen : ""
               }`}
             >
               <LinkListItem
@@ -102,11 +105,32 @@ const GlobalStock = () => {
           </div>
 
           {/* 메뉴 2 */}
-          <AccordianListItem
-            title={"쉽고 빠른 투자 정보"}
-            onClick={onClickAccordion2}
-            isOpen={isOpenAccordian2}
-          />
+          <div>
+            <AccordianListItem
+              title={"쉽고 빠른 투자 정보"}
+              onClick={onClickAccordion2}
+              isOpen={openAccordion2}
+            />
+            <div
+              className={`${styles.linkContentContainer} ${
+                openAccordion2 ? styles.itemOpen : ""
+              }`}
+            >
+              <LinkListItem
+                subText={"쉽게 이해되는 투자 콘텐츠가 가득!"}
+                text={"알파 TV 구독하기"}
+                imageUrl={EventLogo2}
+                linkUrl={"https://www.youtube.com/@shinhansecurities"}
+              />
+
+              <LinkListItem
+                subText={"한발 빠르게 만나보는 투자 콘텐츠"}
+                text={"카카오톡 채널 추가하기"}
+                imageUrl={EventLogo3}
+                linkUrl={"https://pf.kakao.com/_xdnLFd"}
+              />
+            </div>
+          </div>
         </section>
 
         {/* 이벤트 유의사항 */}
